@@ -74,6 +74,40 @@ const getMovieById = (req, res) => {
     });
 };
 
+const postMovie = (req, res) => {
+  const { title, director, year, color, duration } = req.body;
+
+  database
+    .query(
+      "INSERT INTO movies(title, director, year, color, duration) VALUES (?, ?, ?, ?, ?)",
+      [title, director, year, color, duration]
+    )
+    .then(([result]) => {
+      res.status(201).send({ id: result.insertId });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+const postUser = (req, res) => {
+  const { firstname, lastname, email, city, language } = req.body;
+
+  database
+    .query(
+      "INSERT INTO users(firstname, lastname, email, city, language) VALUES (?, ?, ?, ?, ?)",
+      [firstname, lastname, email, city, language]
+    )
+    .then(([result]) => {
+      res.status(201).send({ id: result.insertId });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 const getUserById = (req, res) => {
   const id = parseInt(req.params.id);
   database.query("select * from users where id = ?", [id]).then(([users]) => {
@@ -90,4 +124,6 @@ module.exports = {
   getMovieById,
   getUser,
   getUserById,
+  postUser,
+  postMovie,
 };
