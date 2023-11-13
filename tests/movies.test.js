@@ -67,7 +67,6 @@ describe("POST /api/movies", () => {
     expect(getResponse.body).toHaveProperty("title");
     expect(getResponse.body.duration).toStrictEqual(newMovie.duration);
   });
-
   it("should return an error", async () => {
     const movieWithMissingProps = { title: "Harry Potter" };
 
