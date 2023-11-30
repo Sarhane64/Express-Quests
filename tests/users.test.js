@@ -78,6 +78,7 @@ describe("POST /api/users", () => {
     expect(response.status).toEqual(500);
   });
 });
+
 describe("PUT /api/users/:id", () => {
   it("should edit user", async () => {
     const newUser = {
@@ -193,6 +194,38 @@ describe("PUT /api/users/:id", () => {
     };
 
     const response = await request(app).put("/api/users/0").send(newUser);
+
+    expect(response.status).toEqual(404);
+  });
+});
+
+describe("DELETE /api/movies/:id", () => {
+  it("should delete one movie", async () => {
+    const response = await request(app).delete("/api/movies/1");
+
+    expect(response.headers["content-type"]).toMatch(/json/);
+
+    expect(response.status).toEqual(201);
+  });
+
+  it("should delete no movie", async () => {
+    const response = await request(app).delete("/api/movies/0");
+
+    expect(response.status).toEqual(404);
+  });
+});
+
+describe("DELETE /api/users/:id", () => {
+  it("should delete one users", async () => {
+    const response = await request(app).delete("/api/users/1");
+
+    expect(response.headers["content-type"]).toMatch(/json/);
+
+    expect(response.status).toEqual(201);
+  });
+
+  it("should delete no movie", async () => {
+    const response = await request(app).delete("/api/users/0");
 
     expect(response.status).toEqual(404);
   });
